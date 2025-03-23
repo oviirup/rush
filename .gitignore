@@ -1,0 +1,7 @@
+node_modules
+dist
+*-v*.*.*.tgz
+
+# debug
+*-debug.log*
+*-error.log*

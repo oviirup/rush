@@ -1,0 +1,56 @@
+{
+  "name": "@oviirup/rush",
+  "version": "0.0.0",
+  "description": "Create svg sprite sheet from SVG files, with ease",
+  "keywords": [
+    "cli",
+    "command",
+    "rush",
+    "tool",
+    "npm",
+    "scripts",
+    "run",
+    "sequential",
+    "serial",
+    "parallel",
+    "task"
+  ],
+  "repository": "https://github.com/oviirup/rush",
+  "license": "MIT",
+  "author": "Avirup Ghosh (https://github.com/oviirup)",
+  "bin": {
+    "rush": "./dist/bin.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bunchee -m --no-sourcemap",
+    "clean": "npx rimraf node_modules dist",
+    "dev": "bunchee -w",
+    "format": "prettier -w -u --cache .",
+    "format:check": "prettier -c -u .",
+    "lint": "eslint src",
+    "types:check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "commander": "~13.1.0",
+    "mri": "~1.2.0",
+    "picocolors": "~1.1.1"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "~0.5.1",
+    "@changesets/cli": "~2.28.1",
+    "@types/node": "^22.13.11",
+    "bunchee": "~6.5.0",
+    "prettier": "~3.5.3",
+    "prettier-plugin-imports": "~4.2.12",
+    "prettier-plugin-jsdoc": "~1.3.2",
+    "prettier-plugin-packagejson": "^2.5.10",
+    "typescript": "~5.8.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

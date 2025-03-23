@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/prettierrc.json",
+  "arrowParens": "always",
+  "plugins": [
+    "prettier-plugin-imports",
+    "prettier-plugin-jsdoc",
+    "prettier-plugin-packagejson"
+  ],
+  "quoteProps": "consistent",
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all"
+}
