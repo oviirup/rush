@@ -1,6 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/prettierrc.json",
   "arrowParens": "always",
+  "importOrder": ["<BUILTIN_MODULES>", "<THIRD_PARTY_MODULES>", "<TYPES>"],
   "plugins": [
     "prettier-plugin-imports",
     "prettier-plugin-jsdoc",
