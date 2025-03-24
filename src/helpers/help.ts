@@ -1,5 +1,5 @@
-import pi from 'picocolors';
 import pkg from '../../package.json';
+import pi from 'picocolors';
 
 /**
  * Print a help text

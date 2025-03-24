@@ -5,7 +5,7 @@
   "plugins": [
     "prettier-plugin-imports",
     "prettier-plugin-jsdoc",
-    "prettier-plugin-packagejson"
+    "prettier-plugin-pkg"
   ],
   "quoteProps": "consistent",
   "semi": true,

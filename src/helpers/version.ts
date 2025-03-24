@@ -1,4 +1,3 @@
-import pi from 'picocolors';
 import pkg from '../../package.json';
 
 /**
