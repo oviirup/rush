@@ -8,15 +8,14 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - name: ⚙️ Build Package
-        run: bun run build
+        run: pnpm run build
       - name: 🚀 Create Pull Request & Publish
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: bun changeset publish
+          publish: pnpm changeset publish
           commit: '✅ chore: update version'
           title: '✅ chore: update version'
         env:

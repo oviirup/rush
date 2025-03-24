@@ -37,8 +37,8 @@ You are welcome to contribute to the project. Please follow the [contributing gu
   ```
 
 - **Install dependencies**  
-  This project uses [bun.js](https://bun.sh/), although any other package manager can be used as well.
+  This project uses [pnpm](https://pnpm.io/), although any other package manager can be used as well.
 
   ```bash
-  bun install
+  pnpm install
   ```

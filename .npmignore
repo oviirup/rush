@@ -1,0 +1,5 @@
+.changeset
+.github
+.husky
+src
+!dist
