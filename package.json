@@ -19,6 +19,18 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./lib/packman": {
+      "default": "./dist/lib/packman.js",
+      "import": "./dist/lib/packman.mjs",
+      "require": "./dist/lib/packman.js",
+      "types": "./dist/lib/packman.d.ts"
+    },
+    "./lib/spawn": {
+      "default": "./dist/lib/spawn.js",
+      "import": "./dist/lib/spawn.mjs",
+      "require": "./dist/lib/spawn.js",
+      "types": "./dist/lib/spawn.d.ts"
     }
   },
   "files": [
