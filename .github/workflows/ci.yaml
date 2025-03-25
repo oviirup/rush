@@ -13,6 +13,7 @@ jobs:
     name: 🧪 check types
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: pnpm run types:check
 
@@ -20,6 +21,7 @@ jobs:
     name: 🧪 check formatting
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: pnpm run format:check
 
@@ -27,5 +29,6 @@ jobs:
     name: 🧪 run eslint
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: pnpm run lint
