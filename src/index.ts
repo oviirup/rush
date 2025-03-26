@@ -1,44 +1,28 @@
-import { printHelpText } from './helpers/help';
-import { printVersionText } from './helpers/version';
-import mri from 'mri';
+import { NodeStdio, RushOptions } from '~/types';
+import pi from 'picocolors';
 
-export type RushArgs = {
-  max: string;
-  continue: boolean;
-  serial: boolean;
-  silent: boolean;
-  race: boolean;
-  version: boolean;
-  help: boolean;
-};
+export async function rush(tasks: string[], opts: RushOptions = {}) {
+  const stdio: Partial<NodeStdio> = {
+    stdin: opts.stdio?.stdin ?? process.stdin,
+    stdout: opts.stdio?.stdout ?? process.stdout,
+    stderr: opts.stdio?.stderr ?? process.stderr,
+  };
 
-export function rush(args: string[]) {
-  const stdout = process.stdout;
-  const params = mri<RushArgs>(args, {
-    string: ['max'],
-    boolean: ['continue', 'sequential', 'serial', 'silent', 'race'],
-    alias: {
-      s: ['sequential', 'serial'],
-      c: 'continue',
-      r: 'race',
-      h: 'help',
-      v: 'version',
-    },
-    default: {
-      serial: false,
-      max: '0',
-      continue: false,
-      race: false,
-      silent: false,
-    } as Partial<RushArgs>,
-  });
-
-  // in case of help or version do not continue the process
-  if (params.version) {
-    return printVersionText(stdout);
-  } else if (params.help) {
-    return printHelpText(stdout);
+  // make sure --max flag is a number
+  opts.max = parseInt(String(opts.max), 10);
+  if (Number.isNaN(opts.max) || opts.max < 0) {
+    throw new Error(pi.red('Invalid options.max, must be a number'));
   }
+  if (tasks.length === 0) {
+    throw new Error(pi.red('No tasks are provided'));
+  }
+  if (!opts.parallel && opts.race) {
+    throw new Error(pi.red('options.race require options.parallel'));
+  }
+
+  // TODO: parse tasks
+
+  // TODO: run tasks
 }
 
 export default rush;
