@@ -5,9 +5,9 @@ import type child_process from 'child_process';
 /**
  * Launches a new process with the given command.
  *
- * @param command - The command to run.
- * @param args - List of string arguments.
- * @param options - Options.
+ * @param command The command to run.
+ * @param args List of string arguments.
+ * @param options Options.
  * @returns A ChildProcess instance of new process.
  */
 export function spawn(
@@ -36,7 +36,7 @@ export function spawn(
 /**
  * Kills a process and all of its subprocesses.
  *
- * @param pid - The process ID to kill.
+ * @param pid The process ID to kill.
  */
 export async function terminateProcessTree(pid?: number) {
   if (!pid) return;
@@ -59,7 +59,7 @@ export async function terminateProcessTree(pid?: number) {
  * Recursively gets all child process IDs for a given parent PID (POSIX only).
  *
  * @private
- * @param pid - The parent process ID.
+ * @param pid The parent process ID.
  * @returns - A promise resolving to an array of child PIDs.
  */
 async function getProcessTree(pid: number) {

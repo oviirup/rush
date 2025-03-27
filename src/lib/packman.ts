@@ -1,5 +1,5 @@
 import path from 'path';
-import fs from '~/helpers/files';
+import fs from '~/lib/files';
 
 export const AGENTS = ['npm', 'yarn', 'pnpm', 'bun', 'deno'] as const;
 export type Agent = (typeof AGENTS)[number];
@@ -21,13 +21,13 @@ export const LOCKS: Record<string, Agent> = {
  * [package-manager-detector](https://github.com/antfu-collective/package-manager-detector)
  * created by Antony Fu
  *
- * @param cwd - Path to working directory
+ * @param cwd Path to working directory
  */
-export async function detect(cwd?: string) {
+export async function detect(cwd: string) {
   // look for package manager using following strategies in order
-  const strategies = ['lockfile', 'package-json-field', 'user-agent'];
+  const strategies = ['lockfile', 'package-json-field'];
 
-  for (const dir of lookup(cwd)) {
+  for (const dir of fs.lookup(cwd)) {
     for (const strategy of strategies) {
       switch (strategy) {
         case 'lockfile': {
@@ -40,31 +40,16 @@ export async function detect(cwd?: string) {
           if (result) return result;
           break;
         }
-        case 'user-agent': {
-          const result = fromUserAgent();
-          if (result) return result;
-          break;
-        }
       }
     }
   }
   return null;
 }
 
-function* lookup(cwd?: string): Generator<string> {
-  cwd ??= process.cwd();
-  let dir = path.resolve(cwd);
-  const root = path.parse(dir).root;
-  while (dir && dir !== root) {
-    yield dir;
-    dir = path.dirname(dir);
-  }
-}
-
 /**
  * Get package manager from lock files present in directory
  *
- * @param cwd - Working directory to look for lock files
+ * @param cwd Working directory to look for lock files
  */
 export async function fromLockFiles(cwd: string) {
   // Look up for lock files
@@ -84,12 +69,12 @@ export async function fromLockFiles(cwd: string) {
 /**
  * Get package manager the package.json
  *
- * @param cwd - Working directory to look for package.json
+ * @param cwd Working directory to look for package.json
  */
 export async function fromPackageJson(cwd: string) {
   try {
     const filePath = path.join(cwd, 'package.json');
-    const pkg = JSON.parse(await fs.readFile(filePath, 'utf-8'));
+    const pkg = await fs.readJson(filePath);
     const name = pkg.packageManager.split('@') as Agent;
     return AGENTS.includes(name) ? name : null;
   } catch {

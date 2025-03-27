@@ -5,7 +5,7 @@ import pi from 'picocolors';
  * Print a help text
  *
  * @private
- * @param output - A writable stream to print.
+ * @param output A writable stream to print.
  */
 export function printHelpText(output: NodeJS.WriteStream) {
   output.write(`

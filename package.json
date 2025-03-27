@@ -20,6 +20,12 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./lib/files": {
+      "default": "./dist/lib/files.js",
+      "import": "./dist/lib/files.mjs",
+      "require": "./dist/lib/files.js",
+      "types": "./dist/lib/files.d.ts"
+    },
     "./lib/packman": {
       "default": "./dist/lib/packman.js",
       "import": "./dist/lib/packman.mjs",
@@ -46,7 +52,7 @@
     "parallel"
   ],
   "scripts": {
-    "build": "bunchee -m --no-sourcemap",
+    "build": "bunchee",
     "clean": "npx rimraf node_modules dist",
     "dev": "bunchee -w",
     "format": "prettier -wu --cache .",
