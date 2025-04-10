@@ -1,14 +1,9 @@
 import pkg from '../../package.json';
 import pi from 'picocolors';
 
-/**
- * Print a help text
- *
- * @private
- * @param output A writable stream to print.
- */
-export function printHelpText(output: NodeJS.WriteStream) {
-  output.write(`
+/** Print a help text */
+export function printHelpText() {
+  process.stdout.write(`
 ${pi.cyan(pkg.displayName)}
 ${pkg.description}
 

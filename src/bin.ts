@@ -4,14 +4,10 @@ import { printVersionText } from '~/helpers/version';
 import rush from '~/index';
 import { RushFlags, RushOptions } from '~/types';
 import mri from 'mri';
+import pi from 'picocolors';
 
 (async function main() {
   const args = process.argv.slice(2);
-  const stdin = process.stdin;
-  const stdout = process.stdout;
-  const stderr = process.stderr;
-
-  const stdio = { stdin, stdout, stderr };
 
   // parse cli flags
   const params = mri<RushFlags>(args, {
@@ -35,14 +31,14 @@ import mri from 'mri';
 
   // in case of help or version do not continue the process
   if (params.version) {
-    return printVersionText(stdout);
+    return printVersionText();
   } else if (params.help) {
-    return printHelpText(stdout);
+    return printHelpText();
   }
 
   const tasks = params._;
-  const otps: RushOptions = {
-    stdio,
+  const opts: RushOptions = {
+    cwd: process.cwd(),
     parallel: params.parallel,
     continue: params.continue,
     max: params.max,
@@ -51,8 +47,9 @@ import mri from 'mri';
   };
 
   try {
-    await rush(tasks, otps);
-  } catch (err) {
-    console.error(err);
+    await rush(tasks, opts);
+  } catch (err: Error | unknown) {
+    const message = err instanceof Error ? err.message : err;
+    console.error(pi.red(`ERROR: ${message}`));
   }
 })();
