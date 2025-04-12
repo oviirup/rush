@@ -1,25 +1,18 @@
 name: Setup
-description: Setup CI environment with pnpm cache
-inputs:
-  node-version:
-    description: Version of node.js to install. Eg. 18.x, 21.7.4 etc
-    default: 22.x
-    required: false
+description: Setup CI environment with cache
+
 runs:
   using: composite
   steps:
-    - name: ✅ Checkout
-      uses: actions/checkout@v4
-    - name: 🟡 Install pnpm
-      uses: pnpm/action-setup@v4
+    - name: ✅ Cache Bun dependencies
+      uses: actions/cache@v4
       with:
-        version: 10
-        run_install: false
-    - name: 🟢 Install Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ inputs.node-version }}
-        cache: pnpm
-    - name: 📦 Install dependencies
+        path: ~/.bun/install/cache
+        key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+        restore-keys: |
+          ${{ runner.os }}-bun-
+    - name: 🟢 Setup Bun
+      uses: oven-sh/setup-bun@v2
+    - name: ⚙️ Install dependencies
       shell: bash
-      run: pnpm install
+      run: bun install

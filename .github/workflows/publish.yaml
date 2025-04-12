@@ -11,12 +11,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - name: ⚙️ Build Package
-        run: pnpm run build
+        run: bun run build
       - name: 🚀 Create Pull Request & Publish
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm changeset publish
+          publish: bun changeset publish
           commit: '✅ chore: update version'
           title: '✅ chore: update version'
         env:
