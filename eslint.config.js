@@ -24,6 +24,7 @@ module.exports = [
       'prefer-arrow-callback': 'warn',
       'prefer-template': 'warn',
       'eqeqeq': 'warn',
+      'no-console': ['warn', { allow: ['error', 'warn'] }],
     },
   },
   {
