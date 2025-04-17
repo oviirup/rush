@@ -5,39 +5,26 @@ export type NodeStdio = {
 };
 
 export type RushOptions = {
-  /**
-   * NodeJS stdio (optional)\
-   * Default : {}
-   */
-  stdio?: Partial<NodeStdio>;
-  /**
-   * If 'true' run scripts parallelly, otherwise sequentially\
-   * Default: false
-   */
+  cwd?: string;
+  io?: NodeStdio;
+  scripts: string[];
+  arguments?: string[];
   parallel?: boolean;
-  /**
-   * Ignore errors in running tasks and continue\
-   * Default: false
-   */
-  continue?: boolean;
-  /**
-   * Set the maximum running tasks in parallel\
-   * Default: 0
-   */
-  max?: number;
-  /**
-   * Set log level of npm to 'silent'\
-   * Default: false
-   */
+  continueOnError?: boolean;
+  printLabel?: boolean;
+  maxParallel?: number;
   silent?: boolean;
-  /**
-   * If 'true' kill all tasks if one of them exit with error\
-   * Default: false
-   */
   race?: boolean;
 };
 
-export type RushFlags = {
-  version?: boolean;
-  help?: boolean;
-} & RushOptions;
+export type PackageJSON = {
+  name: string;
+  version: string;
+  main?: string;
+  types?: string;
+  scripts?: Record<string, string>;
+  dependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  license?: string;
+};
