@@ -1,6 +1,6 @@
 {
   "name": "@oviirup/rush",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "displayName": "Rush",
   "description": "Simple and light-weight CLI tool to run scripts parallelly or sequentially",
   "repository": "https://github.com/oviirup/rush",
