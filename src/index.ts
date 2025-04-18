@@ -1,3 +1,4 @@
+import path from 'path';
 import parseArgv from './lib/parse-argv';
 import readPackageJson from './lib/read-package-json';
 import runAll from './lib/run-all';
@@ -26,6 +27,11 @@ async function rush(inputArgs: string[], opts: Partial<RushOptions> = {}) {
       stderr: opts.io?.stderr ?? process.stderr,
     };
 
+    // get npm execution path
+    const npmPath = opts.npmPath || process.env.npm_execpath;
+    const npmPathIsJs = npmPath && /\.m?js/.test(path.extname(npmPath));
+    const execPath = npmPathIsJs ? process.execPath : npmPath || 'npm';
+
     const config: Required<RushOptions> = {
       cwd,
       io,
@@ -37,6 +43,7 @@ async function rush(inputArgs: string[], opts: Partial<RushOptions> = {}) {
       race: Boolean(opts.race ?? args.race),
       maxParallel: opts.maxParallel ?? args.maxParallel,
       silent: Boolean(opts.silent ?? args.silent),
+      npmPath: execPath,
     };
 
     // run all groups with promises

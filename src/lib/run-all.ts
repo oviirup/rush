@@ -50,10 +50,14 @@ async function runAll(inputPatterns: string[], opts: RushOptions) {
       throw new Error('Invalid options.race; It requires options.parallel');
     }
 
-    // get npm execution path
-    const npmPath = opts.npmPath || process.env.npm_execpath;
-    const npmPathIsJs = npmPath && /\.m?js/.test(path.extname(npmPath));
-    const execPath = npmPathIsJs ? process.execPath : npmPath || 'npm';
+    let execPath = opts.npmPath;
+
+    if (!execPath) {
+      // get npm execution path
+      const npmPath = process.env.npm_execpath;
+      const npmPathIsJs = npmPath && /\.m?js/.test(path.extname(npmPath));
+      execPath = npmPathIsJs ? process.execPath : npmPath || 'npm';
+    }
 
     return Promise.resolve()
       .then(() => scripts || readPackageJson(cwd))
