@@ -1,5 +1,6 @@
 .changeset
 .github
 .husky
+.vscode
 src
 !dist

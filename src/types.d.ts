@@ -5,39 +5,38 @@ export type NodeStdio = {
 };
 
 export type RushOptions = {
-  /**
-   * NodeJS stdio (optional)\
-   * Default : {}
-   */
-  stdio?: Partial<NodeStdio>;
-  /**
-   * If 'true' run scripts parallelly, otherwise sequentially\
-   * Default: false
-   */
+  /** The current working directory */
+  cwd?: string;
+  /** The node.js input/output/error streams */
+  io?: NodeStdio;
+  /** The npm scripts to run */
+  scripts: string[];
+  /** The arguments to pass to the npm scripts */
+  arguments?: string[];
+  /** Run the group of tasks in parallel */
   parallel?: boolean;
-  /**
-   * Ignore errors in running tasks and continue\
-   * Default: false
-   */
-  continue?: boolean;
-  /**
-   * Set the maximum running tasks in parallel\
-   * Default: 0
-   */
-  max?: number;
-  /**
-   * Set log level of npm to 'silent'\
-   * Default: false
-   */
+  /** Continue running tasks even if one fails */
+  continueOnError?: boolean;
+  /** Print the label of the tasks */
+  printLabel?: boolean;
+  /** The maximum number of tasks to run in parallel */
+  maxParallel?: number;
+  /** Suppress all output */
   silent?: boolean;
-  /**
-   * If 'true' kill all tasks if one of them exit with error\
-   * Default: false
-   */
+  /** Abort all tasks if one fails */
   race?: boolean;
+  /** The path to the npm executable */
+  npmPath?: string;
 };
 
-export type RushFlags = {
-  version?: boolean;
-  help?: boolean;
-} & RushOptions;
+export type PackageJSON = {
+  name: string;
+  version: string;
+  main?: string;
+  types?: string;
+  scripts?: Record<string, string>;
+  dependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  license?: string;
+};

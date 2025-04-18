@@ -1,10 +1,10 @@
-import js from '@eslint/js';
-import prettier from 'eslint-config-prettier';
-import onlyWarn from 'eslint-plugin-only-warn';
-import ts from 'typescript-eslint';
+const js = require('@eslint/js');
+const prettier = require('eslint-config-prettier');
+const onlyWarn = require('eslint-plugin-only-warn');
+const ts = require('typescript-eslint');
 
 /** @type {import('eslint').Linter.Config} */
-export default [
+module.exports = [
   prettier,
   js.configs.recommended,
   ...ts.configs.recommended,
@@ -24,9 +24,10 @@ export default [
       'prefer-arrow-callback': 'warn',
       'prefer-template': 'warn',
       'eqeqeq': 'warn',
+      'no-console': ['warn', { allow: ['error', 'warn'] }],
     },
   },
   {
-    ignores: ['eslint.config.js', 'dist/**'],
+    ignores: ['eslint.config.js', 'node_modules', 'dist'],
   },
 ];

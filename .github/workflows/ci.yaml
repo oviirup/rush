@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - run: pnpm run types:check
+      - run: bun run types:check
 
   check-format:
     name: 🧪 check formatting
@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - run: pnpm run format:check
+      - run: bun run format:check
 
   lint:
     name: 🧪 run eslint
@@ -31,4 +31,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - run: pnpm run lint
+      - run: bun run lint

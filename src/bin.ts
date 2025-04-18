@@ -1,58 +1,69 @@
 #!/usr/bin/env node
-import { printHelpText } from '~/helpers/help';
-import { printVersionText } from '~/helpers/version';
-import rush from '~/index';
-import { RushFlags, RushOptions } from '~/types';
-import mri from 'mri';
+import pkg from '../package.json';
+import rush from './index';
+import pi from 'picocolors';
 
-(async function main() {
-  const args = process.argv.slice(2);
-  const stdin = process.stdin;
-  const stdout = process.stdout;
-  const stderr = process.stderr;
+void (function main() {
+  const argv = process.argv.slice(2);
 
-  const stdio = { stdin, stdout, stderr };
+  switch (argv[0]) {
+    case undefined:
+    case '-h':
+    case '--help':
+      printHelpText();
+      break;
+    case '-v':
+    case '--version':
+      printVersionText();
+      break;
+    default:
+      // Avoid max listeners exceeded warnings.
+      process.stdout.setMaxListeners(0);
+      process.stderr.setMaxListeners(0);
+      process.stdin.setMaxListeners(0);
 
-  // parse cli flags
-  const params = mri<RushFlags>(args, {
-    string: ['max'],
-    boolean: ['parallel', 'continue', 'silent', 'race', 'help', 'version'],
-    alias: {
-      p: 'parallel',
-      c: 'continue',
-      r: 'race',
-      h: 'help',
-      v: 'version',
-    },
-    default: {
-      parallel: false,
-      continue: false,
-      max: 0,
-      race: false,
-      silent: false,
-    } as Partial<RushFlags>,
-  });
-
-  // in case of help or version do not continue the process
-  if (params.version) {
-    return printVersionText(stdout);
-  } else if (params.help) {
-    return printHelpText(stdout);
-  }
-
-  const tasks = params._;
-  const otps: RushOptions = {
-    stdio,
-    parallel: params.parallel,
-    continue: params.continue,
-    max: params.max,
-    silent: params.silent,
-    race: params.race,
-  };
-
-  try {
-    await rush(tasks, otps);
-  } catch (err) {
-    console.error(err);
+      rush(argv)
+        .then(() => {
+          process.exit(0);
+        })
+        .catch((err) => {
+          process.stderr.write(pi.red(`ERROR: ${err}`));
+          process.exit(1);
+        });
   }
 })();
+
+/** Print a help text */
+function printHelpText() {
+  process.stdout.write(`
+${pi.cyan(pkg.displayName)}
+${pkg.description}
+
+Usage: rush ${pi.gray('[OPTIONS] <tasks>')}
+
+  ${pi.gray('tasks - list of npm-scripts names and glob patterns')}
+
+Options:
+  -p --parallel   ${pi.gray('Run a group of tasks in parallel order')}
+  -s --sequential ${pi.gray('Run a group of tasks in sequential order')}
+  -c --continue   ${pi.gray(`Set the flag to continue executing other tasks even if a task threw an error`)}
+  -m --max        ${pi.gray('Set the maximum number of parallelism. Default is 0 i.e. unlimited')}
+  -l --label      ${pi.gray('Print the label of the task as prefix on each line of output')}
+  -r --race       ${pi.gray('Set the flag to kill all tasks when a task finished with zero')}
+     --silent     ${pi.gray('Set the log level of npm to silent')}
+
+  Shorthand can also be combined together
+  For example, '-csr' means '-c -s -r'
+
+Examples:
+  ${pi.gray('$')} rush watch:**
+  ${pi.gray('$')} rush "build:** -- --watch"
+  ${pi.gray('$')} rush -sr "build:**"
+  ${pi.gray('$')} rush start-server start-browser start-electron
+`);
+}
+
+/** Print a cli version */
+function printVersionText() {
+  process.stdout.write(`v${pkg.version}\n`);
+}
