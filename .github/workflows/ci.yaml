@@ -1,34 +1,30 @@
-name: CI
-
+name: ci
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 on:
   push:
-    branches: [main]
   pull_request:
-
-permissions:
-  contents: read
-
 jobs:
-  check-types:
-    name: 🧪 check types
+  typecheck:
+    name: 🧪 typecheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - run: bun run types:check
-
-  check-format:
-    name: 🧪 check formatting
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - run: bun run format:check
-
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - run: bun run typecheck
   lint:
-    name: 🧪 run eslint
+    name: 🧪 lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
       - run: bun run lint
+  test:
+    name: 🧪 test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - run: bun run test

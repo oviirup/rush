@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "isolatedModules": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    "target": "ES2020"
   },
-  "exclude": ["node_modules"],
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "exclude": ["node_modules", "dist", "tests"],
+  "include": ["src/**/*.ts"]
 }

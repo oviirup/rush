@@ -1,84 +1,26 @@
 {
   "name": "@oviirup/rush",
-  "version": "1.0.0",
-  "displayName": "Rush",
-  "description": "Simple and light-weight CLI tool to run scripts parallelly or sequentially",
-  "repository": "https://github.com/oviirup/rush",
-  "author": "Avirup Ghosh (https://github.com/oviirup)",
+  "version": "2.0.0",
+  "description": "Simple zero-config lightning fast JS/TS bundler",
   "license": "MIT",
-  "bin": {
-    "rush": "./dist/bin.js"
-  },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "module": "./dist/index.mjs",
-  "exports": {
-    "./bin": {
-      "default": "./dist/bin.js",
-      "node": "./dist/bin.js"
-    },
-    ".": {
-      "default": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    },
-    "./lib/files": {
-      "default": "./dist/lib/files.js",
-      "import": "./dist/lib/files.mjs",
-      "types": "./dist/lib/files.d.ts"
-    },
-    "./lib/spawn": {
-      "default": "./dist/lib/spawn.js",
-      "import": "./dist/lib/spawn.mjs",
-      "types": "./dist/lib/spawn.d.ts"
-    }
-  },
-  "keywords": [
-    "cli",
-    "rush",
-    "npm",
-    "scripts",
-    "run",
-    "serial",
-    "parallel"
-  ],
+  "repository": "https://github.com/oviirup/rush",
+  "author": "Avirup Ghosh (github.com/oviirup)",
   "scripts": {
-    "build": "bunchee",
-    "clean": "npx rimraf node_modules dist",
-    "dev": "bunchee -w",
-    "format": "prettier -wu --cache .",
-    "format:check": "prettier -cu .",
-    "lint": "eslint src",
-    "types:check": "tsc --noEmit"
-  },
-  "dependencies": {
-    "cross-spawn": "~7.0.6",
-    "p-limit": "~6.2.0",
-    "picocolors": "~1.1.1",
-    "picomatch": "~4.0.2",
-    "shell-quote": "~1.8.2"
+    "format": "biome format --write",
+    "lint": "biome check",
+    "prepare": "lefthook install",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "~0.5.1",
-    "@changesets/cli": "~2.29.2",
-    "@eslint/js": "~9.24.0",
-    "@types/cross-spawn": "~6.0.6",
-    "@types/node": "~22.14.1",
-    "@types/picomatch": "~4.0.0",
-    "@types/shell-quote": "~1.7.5",
-    "bunchee": "~6.5.0",
-    "eslint": "~9.24.0",
-    "eslint-config-prettier": "~10.1.2",
-    "eslint-plugin-only-warn": "~1.1.0",
-    "prettier": "~3.5.3",
-    "prettier-plugin-imports": "~4.2.12",
-    "prettier-plugin-jsdoc": "~1.3.2",
-    "prettier-plugin-pkg": "~0.19.0",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "~8.30.1"
+    "@biomejs/biome": "^2.3.11",
+    "@types/bun": "^1.3.6",
+    "lefthook": "^2.0.15",
+    "typescript": "^5.9.3"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+  "dependencies": {
+    "cac": "^6.7.14",
+    "picocolors": "^1.1.1",
+    "rolldown": "^1.0.0-rc.1"
   }
 }

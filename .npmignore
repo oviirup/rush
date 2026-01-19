@@ -1,6 +1,3 @@
-.changeset
-.github
-.husky
-.vscode
-src
-!dist
+# ignore all files except dist folder
+**/*
+!dist/**/*
